@@ -1,6 +1,8 @@
 <script>
 	import Table from './Table.svelte';
 	import Modal from './Modal.svelte';
+	import {onMount} from 'svelte';
+	import { fetchOrders } from './order_api';
 
   	let showModal = false;
 
@@ -12,26 +14,13 @@
 		console.log('submitted')
 	}
 
-	let tableData = [
-		{
-			id: "1",
-			date: "2024-03-14",
-			companyName: 'Dygnet runt städ AB',
-			email: 'linda.harvigsson@dygnetruntgruppen.se',
-			phone: '010-174 73 05',
-			name: 'Linda Harvigsson',
-			order: 'Nordin 1 44'
-		},
-		{
-			id: "2",
-			date: "2024-03-14",
-			companyName: 'Collinder märksystem AB',
-			email: 'piotr.karaszewski@collinder.se',
-			phone: '010-174 73 05',
-			name: 'Piotr',
-			order: 'Björkom 2- 43'
-		}
-	];
+	let orders = [];
+
+  onMount(async () => {
+    orders = await fetchOrders();
+  });
+
+  
 </script>
 
 
@@ -47,7 +36,7 @@
 	<p>Nedan kan du se beställningar och lägga in nya beställningar.</p>
 	<button on:click={() => toggleModal()}>Skapa order</button>
 	<div class="mainTable">
-		<Table data={tableData} />
+		<Table data={orders} />
 	</div>
 	
 </main>

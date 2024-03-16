@@ -8,8 +8,10 @@
   const deleteRow = (id) => {
     data = data.filter( (row) => row.id != id)
   }
+  $: data.forEach(order => console.log(order.email_address));
+  
 </script>
-<Table hoverable="true">
+<Table >
   <Thead>
     <tr>
       {#each columns as column}
@@ -18,15 +20,15 @@
     </tr>
   </Thead>
   <Tbody>
-    {#each data as {id, date, companyName, email, phone, name, order}}
+    {#each data.reverse() as order}
       <tr>
-        <td>{date}</td>
-        <td contenteditable="true" >{companyName}</td>
-        <td>{email}</td>
-        <td>{phone}</td>
-        <td>{name}</td>
-        <td>{order}</td>
-        <td><button on:click={() => deleteRow(id)}>DELETE</button></td>
+        <td>{order.order_id}</td>
+        <td contenteditable="true" >{order.company_name}</td>
+        <td type>{order.email_address}</td>
+        <td>{order.phonenumber}</td>
+        <td>{order.firstname +" " + order.lastname}</td>
+        <td>{order.total_paid}</td>
+        <td><button on:click={() => deleteRow(order.order_id)}>DELETE</button></td>
       </tr>
     {/each}
   </Tbody>

@@ -6,6 +6,8 @@ def load_from_csv(csv_file_path):
     with open(csv_file_path, mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file,  delimiter=';')
         for row in csv_reader:
+            if row['email_address'].startswith('_'):
+                row['email_address'] = row['email_address'][1:]
             orders.append(row)
     return orders
 
