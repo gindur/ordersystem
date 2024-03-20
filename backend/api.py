@@ -1,8 +1,8 @@
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
-import csv_handler as data
+import utils.csv_handler as data
 
-csv_path = "orders.csv"
+csv_path = "data/orders.csv"
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
 

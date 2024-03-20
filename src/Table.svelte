@@ -1,14 +1,13 @@
 <script>
-  export let data = [];
-
   import { Table, Tbody, Thead } from 'svelte-atoms';
   
+  export let data = [];
+  $: reversedData = [...data].reverse()
   let columns = ["Datum", "Företagsnamn", "E-post", "Telefon", "Namn", "Order"]
 
   const deleteRow = (id) => {
-    data = data.filter( (row) => row.id != id)
+    data = data.filter( (row) => row.order_id != id)
   }
-  $: data.forEach(order => console.log(order.email_address));
   
 </script>
 <Table >
@@ -20,7 +19,7 @@
     </tr>
   </Thead>
   <Tbody>
-    {#each data.reverse() as order}
+    {#each reversedData as order (order.order_id)}
       <tr>
         <td>{order.order_id}</td>
         <td contenteditable="true" >{order.company_name}</td>

@@ -1,6 +1,7 @@
 <script>
 	import Table from './Table.svelte';
 	import Modal from './Modal.svelte';
+	import Header from './components/Header.svelte'
 	import {onMount} from 'svelte';
 	import { fetchOrders } from './order_api';
 
@@ -31,8 +32,12 @@
 		<button>Lägg till</button>
 	</form>
 </Modal>
+
+<Header />
+
 <main>
-	<h1>Välkommen till ordermail!</h1>
+	
+	<h1>Välkommen till ordermail</h1>
 	<p>Nedan kan du se beställningar och lägga in nya beställningar.</p>
 	<button on:click={() => toggleModal()}>Skapa order</button>
 	<div class="mainTable">

@@ -1,14 +1,21 @@
 import csv
+import os
+import sys
+from pathlib import Path
 
 
 def load_from_csv(csv_file_path):
     orders = []
-    with open(csv_file_path, mode='r', encoding='utf-8') as csv_file:
-        csv_reader = csv.DictReader(csv_file,  delimiter=';')
-        for row in csv_reader:
-            if row['email_address'].startswith('_'):
-                row['email_address'] = row['email_address'][1:]
-            orders.append(row)
+    try:
+        with open(csv_file_path, mode='r', encoding='utf-8') as csv_file:
+            csv_reader = csv.DictReader(csv_file,  delimiter=';')
+            for row in csv_reader:
+                if row['email_address'].startswith('_'):
+                    row['email_address'] = row['email_address'][1:]
+                orders.append(row)
+    except OSError as e:
+        print(f"Unable to open {csv_file_path}: {e}", file=sys.stderr)
+        return
     return orders
 
 def parse_products(products_str):
@@ -31,11 +38,4 @@ def process_orders(csv_file_path):
     for order in orders:
         order['products'] = parse_products(order['products'])
     return orders
-
-
-if __name__ == "__main__":
-    csv_file_path = 'backend/orders.csv'
-    orders = process_orders(csv_file_path)
-    print(orders[100])
-
 
