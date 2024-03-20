@@ -11,5 +11,10 @@ def get_orders():
     orders = data.process_orders(csv_path)
     return jsonify(orders)
 
+@app.route('/api/customers', methods=['GET'])
+def get_customers():
+    _,customers, _  = data.process_orders(csv_path)
+    return jsonify(customers)
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
